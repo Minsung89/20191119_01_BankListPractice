@@ -6,4 +6,5 @@ class Bank {
     var code = ""
     var name = ""
     var logo = ""
+
 }
