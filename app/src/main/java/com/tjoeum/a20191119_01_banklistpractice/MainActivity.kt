@@ -19,6 +19,10 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setValues()
+        setEvents()
+
     }
 
     override fun setEvents() {
@@ -39,13 +43,15 @@ class MainActivity : BaseActivity() {
         ServerUtil.getRequestBankList(mContext, object : ServerUtil.JsonResponseHandler{
             override fun onResponse(json: JSONObject) {
 
+                Log.d("서버 응답", json.toString())
                 val code = json.getInt("code")
+
 
                 if(code == 200){
                     val data = json.getJSONObject("data")
                     val banks  = data.getJSONArray("banks")
 
-                    for (i in 0..banks.length()){
+                    for (i in 0..banks.length()-1){
                         var bankJSONObject = banks.getJSONObject(i)
                         bankList.add(Bank.getBankFromJsonObject(bankJSONObject))
                     }
