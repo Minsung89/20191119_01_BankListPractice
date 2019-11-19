@@ -28,10 +28,10 @@ class BanksAdapter(context: Context, res: Int, bankList: ArrayList<Bank>) : Arra
         var row = tempRow!!
 
         var logoImg = row.findViewById<ImageView>(R.id.logoImg)
-        var banName = row.findViewById<TextView>(R.id.bankName)
+        var bankName = row.findViewById<TextView>(R.id.bankName)
 
         Glide.with(mContext).load(mList[position].logo).into(logoImg)
-        banName.text = mList[position].name
+        bankName.text = mList[position].name
 
         return row
     }
