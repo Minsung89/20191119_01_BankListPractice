@@ -3,6 +3,7 @@ package com.tjoeum.a20191119_01_banklistpractice
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.tjoeum.a20191119_01_banklistpractice.adapter.BanksAdapter
 import com.tjoeum.a20191119_01_banklistpractice.datas.Bank
 import com.tjoeum.a20191119_01_banklistpractice.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,7 +14,7 @@ import kotlin.collections.ArrayList
 class MainActivity : BaseActivity() {
 
     var bankList = ArrayList<Bank>()
-
+    var banksAdapter : BanksAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,11 @@ class MainActivity : BaseActivity() {
 
     override fun setValues() {
         getBanksFromServer()
+
+        banksAdapter = BanksAdapter(mContext,R.layout.bank_list_item,bankList)
+        bankListView.adapter = banksAdapter
+
+
     }
 
 
@@ -42,6 +48,9 @@ class MainActivity : BaseActivity() {
                     for (i in 0..banks.length()){
                         var bankJSONObject = banks.getJSONObject(i)
                         bankList.add(Bank.getBankFromJsonObject(bankJSONObject))
+                    }
+                    runOnUiThread {
+                        banksAdapter?.notifyDataSetChanged()
                     }
 
                 }else{

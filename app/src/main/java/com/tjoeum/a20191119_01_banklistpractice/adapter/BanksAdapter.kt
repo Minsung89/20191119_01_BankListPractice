@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.tjoeum.a20191119_01_banklistpractice.R
 import com.tjoeum.a20191119_01_banklistpractice.datas.Bank
 import java.util.zip.Inflater
@@ -29,9 +30,8 @@ class BanksAdapter(context: Context, res: Int, bankList: ArrayList<Bank>) : Arra
         var logoImg = row.findViewById<ImageView>(R.id.logoImg)
         var banName = row.findViewById<TextView>(R.id.bankName)
 
+        Glide.with(mContext).load(mList[position].logo).into(logoImg)
         banName.text = mList[position].name
-
-
 
         return row
     }
