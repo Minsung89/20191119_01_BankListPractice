@@ -43,8 +43,34 @@ class ServerUtil {
                 }
 
             })
+        }
+
+        fun getRequestDeliveryList(context: Context, handler: JsonResponseHandler){
+
+            var client = OkHttpClient()
+
+            var urlBuilder = "${BASE_URL}/info/company".toHttpUrlOrNull()!!.newBuilder()
+
+            //파라미터가 필요없똬!!!!!
+//            urlBuilder.addEncodedQueryParameter()
+
+            var requestUrl = urlBuilder.build().toString()
+
+            var request = Request.Builder().url(requestUrl).build()
 
 
+            client.newCall(request).enqueue(object : Callback{
+                override fun onFailure(call: Call, e: IOException) {
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+
+                    val body = response.body!!.string()
+                    val json = JSONObject(body)
+                    handler?.onResponse(json)
+                }
+
+            })
         }
     }
 
